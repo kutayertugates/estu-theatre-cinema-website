@@ -62,3 +62,5 @@ def Login(request):
         "departments" : departments
     })
 
+def Profile(request):
+    return render(request, 'Account/profile.html')

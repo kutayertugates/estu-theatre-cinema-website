@@ -62,17 +62,6 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col">
-                                    {% if user.is_authenticated %}
-                                        <p>Hoş geldin, {{ user.first_name }}!</p>
-                                        <a href="#">Çıkış Yap</a>
-                                    {% else %}
-                                        <a href="{% url 'Account:login' %}">Giriş Yap</a>
-                                    {% endif %}
-                                </div>
-                            </div>
-
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="loginEmail" name="l_email" placeholder="name@example.com" required>
                                 <label for="loginEmail">E-posta Adresi</label>

@@ -11,11 +11,11 @@
 
 /* Hero Section */
 .hero-section {
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
+    padding-top: 0; 
     display: flex;
     align-items: center;
     position: relative;
-    padding-top: 80px;
     background-image: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop');
     background-size: cover;
     background-position: center center;
@@ -41,10 +41,12 @@
 /* Hero içindeki özel buton grubu ayarları */
 .hero-btn-group .btn-outline-light {
     backdrop-filter: blur(5px);
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
 }
- .hero-btn-group .btn-outline-light:hover {
-     background: white;
-     color: black;
- }
+.hero-btn-group .btn-outline-light:hover {
+    background: white;
+    color: black;
+    transform: translateY(-2px);
+}

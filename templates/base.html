@@ -11,6 +11,7 @@
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
@@ -21,7 +22,7 @@
         <title>{% block Title %}{% endblock %}Tiyatro ve Sinema Kulübü</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg fixed-top">
+        <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container">
                 <a class="navbar-brand fs-3" href="{% url 'General:homepage' %}">
                     <img src="{% static 'image/logo.png' %}" alt="" class="logo">
@@ -49,7 +50,15 @@
                         <li class="nav-item"><a class="nav-link" href="#sponsorlar">Sponsorlar</a></li>
                         
                         <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                            <a href="#uye-ol" class="btn btn-outline-light btn-sm rounded-pill px-4">Kulübe Katıl</a>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'Account:profile' %}" class="btn btn-outline-light btn-sm rounded-pill px-4">
+                                    <i class="fa-regular fa-user"></i>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'Account:login' %}" class="btn btn-outline-light btn-sm rounded-pill px-4">
+                                    Kulübe Katıl
+                                </a>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>
