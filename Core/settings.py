@@ -17,8 +17,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
     'Period',
+    'General',
     'Account',
 ]
 
@@ -46,7 +45,7 @@ ROOT_URLCONF = 'Core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,17 +107,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = 'static/'
 
-# Geliştirme aşamasında senin koyduğun CSS/JS dosyalarını burada arar
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Projeyi canlıya aldığında (collectstatic komutuyla) tüm dosyaların toplanacağı yer
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# 2. Medya Dosyaları (Kullanıcı Uploadları - Film Afişleri vb.)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'

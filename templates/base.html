@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block MetaTag %}{% endblock %}
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        {% block PageCSS %}{% endblock %}
+        
+        <title>{% block Title %}{% endblock %}Tiyatro ve Sinema Kulübü</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container">
+                <a class="navbar-brand fs-3" href="{% url 'homepage' %}">
+                    <img src="{% static 'image/logo.png' %}" alt="" class="logo">
+                </a>
+                <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item"><a class="nav-link active" href="{% url 'homepage' %}">Anasayfa</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#etkinlikler">Etkinlikler</a></li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Kurumsal
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#yonetim">Yönetim Kurulu</a></li>
+                                <li><a class="dropdown-item" href="#">Geçmiş Yönetimler</a></li>
+                                <li><hr class="dropdown-divider bg-light"></li>
+                                <li><a class="dropdown-item" href="#">Danışman Hocamız</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="#sponsorlar">Sponsorlar</a></li>
+                        
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                            <a href="#uye-ol" class="btn btn-outline-light btn-sm rounded-pill px-4">Kulübe Katıl</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        {% block Content %}{% endblock %}
+
+        <footer class="py-4">
+            <div class="container d-flex flex-wrap justify-content-between align-items-center">
+                <div class="col-md-4 d-flex align-items-center">
+                    <span class="text-secondary small">© 2024 Tiyatro & Sinema Kulübü. Tüm hakları saklıdır.</span>
+                </div>
+                <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                    <li class="ms-3"><a class="text-secondary" href="#"><i class="bi bi-twitter-x fs-5"></i></a></li>
+                    <li class="ms-3"><a class="text-secondary" href="#"><i class="bi bi-instagram fs-5"></i></a></li>
+                    <li class="ms-3"><a class="text-secondary" href="#"><i class="bi bi-youtube fs-5"></i></a></li>
+                </ul>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        {% block PageJS %}{% endblock %}
+    </body>
+</html>

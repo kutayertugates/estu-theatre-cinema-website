@@ -1,0 +1,39 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+body {
+    background-color: var(--background-50);
+    color: var(--text-800);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .navbar-brand {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-950);
+}
+
+a { 
+    text-decoration: none; 
+    transition: 0.3s ease; 
+}
+
+/* Genel Bölüm Başlık Stili */
+.section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 60px; height: 3px;
+    background: var(--secondary-500);
+}
+
+.logo {
+    height: 60px;
+}

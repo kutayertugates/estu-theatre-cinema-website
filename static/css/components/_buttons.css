@@ -1,0 +1,39 @@
+/* --- BUTONLAR --- */
+
+/* Glow Effect Button */
+.btn-primary-glow {
+    background: linear-gradient(135deg, var(--primary-600), var(--primary-900));
+    border: none;
+    color: white;
+    padding: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(158, 42, 47, 0.5);
+    color: white;
+}
+
+/* Switcher Tabs (Login/Register Geçişi) */
+.btn-switch {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-800);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn-switch.active {
+    background: var(--secondary-500);
+    border-color: var(--secondary-500);
+    color: black;
+    font-weight: 600;
+}

@@ -1,0 +1,78 @@
+:root {
+    /* --- METİN RENKLERİ (Okunabilirlik için hafif kırık beyazlar) --- */
+    --text-50: #0a0a0a;
+    --text-100: #1a1a1a;
+    --text-200: #333333;
+    --text-300: #4d4d4d;
+    --text-400: #808080;
+    --text-500: #999999;
+    --text-600: #b3b3b3;
+    --text-700: #cccccc;
+    --text-800: #e6e6e6;
+    --text-900: #f2f2f2;
+    --text-950: #ffffff;
+
+    /* --- ARKAPLAN (Düz Koyu Renk - Sahne Siyahı) --- */
+    /* Glassmorphism'in parlaması için zemin mat ve koyu olmalı */
+    --background-50: #000000;
+    --background-100: #050505;
+    --background-200: #0a0a0a;
+    --background-300: #121212;
+    --background-400: #1a1a1a;
+    --background-500: #262626;
+    --background-600: #333333;
+    --background-700: #404040;
+    --background-800: #595959;
+    --background-900: #737373;
+    --background-950: #8c8c8c;
+
+    /* --- PRIMARY: LOGO BORDOSU (Tiyatro) --- */
+    /* Base Color: #9E2A2F (Logodan alınan referans) */
+    --primary-50: #fcf4f4;
+    --primary-100: #f7e3e4;
+    --primary-200: #efc6c8;
+    --primary-300: #e39fa2;
+    --primary-400: #d36e73;
+    --primary-500: #ba4046; /* Canlı Bordo */
+    --primary-600: #9e2a2f; /* LOGO ANA RENGİ */
+    --primary-700: #852025;
+    --primary-800: #6f1c20;
+    --primary-900: #5e1b1e;
+    --primary-950: #330b0d;
+
+    /* --- SECONDARY: LOGO SARISI/ALTINI (Sinema) --- */
+    /* Base Color: #DEA552 (Logodan alınan referans) */
+    --secondary-50: #fdf9f2;
+    --secondary-100: #faefde;
+    --secondary-200: #f4ddba;
+    --secondary-300: #edc691;
+    --secondary-400: #e6aa63;
+    --secondary-500: #dea552; /* LOGO SARI RENGİ */
+    --secondary-600: #bf823b;
+    --secondary-700: #99602e;
+    --secondary-800: #7d4d29;
+    --secondary-900: #664025;
+    --secondary-950: #382110;
+
+    /* --- ACCENT: NÖTR GRİLER (Arayüz elemanları için) --- */
+    --accent-50: #111111;
+    --accent-100: #1c1c1c;
+    --accent-200: #2b2b2b;
+    --accent-300: #444444;
+    --accent-400: #5e5e5e;
+    --accent-500: #787878;
+    --accent-600: #9e9e9e;
+    --accent-700: #bdbdbd;
+    --accent-800: #e0e0e0;
+    --accent-900: #f5f5f5;
+    --accent-950: #ffffff;
+
+    /* --- GLASSMORPHISM ÖZEL DEĞİŞKENLERİ --- */
+    --glass-bg: rgba(255, 255, 255, 0.03); 
+    --glass-bg-hover: rgba(255, 255, 255, 0.08);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+    --glass-backdrop-blur: blur(12px);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    --bg-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+    
+}
