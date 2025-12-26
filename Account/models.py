@@ -4,9 +4,15 @@ from django.utils import timezone
 from Account.managers import CustomUserManager
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True, verbose_name='Email Adresi')
+    # period
     first_name = models.CharField(max_length=50, blank=True, verbose_name='Ad')
     last_name = models.CharField(max_length=50, blank=True, verbose_name='Soyad')
+    email = models.EmailField(unique=True, verbose_name='Email Adresi')
+    phone = models.CharField(max_length=24, blank=True, verbose_name='Telefon Numarası')
+    tc_no = models.CharField(max_length=11, blank=True, verbose_name='Okul Numarası')
+    # department
+    receipt = models.FileField(upload_to='receipts/%Y/%m/', blank=True, null=True, verbose_name='Dekont Dosyası') 
+
     
     is_staff = models.BooleanField(default=False) # Admin paneline girebilir mi?
     is_active = models.BooleanField(default=True) # Hesabı aktif mi?
