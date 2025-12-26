@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/login.css' %}">
+
+    <title>Üyelik - Tiyatro ve Sinema Kulübü</title>
+</head>
+<body>
+
+    <div class="auth-bg"></div>
+    <div class="auth-overlay"></div>
+
+    <nav class="simple-nav container">
+        <a class="navbar-brand fs-4 d-flex align-items-center text-decoration-none" href="{% url 'General:homepage' %}">
+            <i class="bi bi-chevron-left me-2 text-white-50"></i>
+            <span style="font-family: 'Playfair Display', serif; color: var(--text-950);">
+                Tiyatro<span style="color: var(--primary-500)">&</span>Sinema
+            </span>
+        </a>
+    </nav>
+
+    <div class="container d-flex align-items-center justify-content-center flex-grow-1">
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-8 col-lg-5">
+                <!-- LOGIN -->
+                <div class="auth-card">
+                    <div class="d-flex justify-content-center mb-5 bg-black bg-opacity-25 p-1 rounded-pill mx-auto" style="width: fit-content; border: 1px solid rgba(255,255,255,0.1);">
+                        <button class="btn-switch active me-2" id="btn-login" onclick="switchTab('login')">Giriş Yap</button>
+                        <button class="btn-switch" id="btn-register" onclick="switchTab('register')">Kayıt Ol</button>
+                    </div>
+
+                    <div id="login-form" class="form-section">
+                        <div class="text-center mb-4">
+                            <h2 class="text-white mb-2">Tekrar Hoş Geldin</h2>
+                            <p class="text-secondary small">Başrol seni bekliyor, sahneye çıkmaya hazır mısın?</p>
+                        </div>
+
+                        <form>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+                                <label for="loginEmail">E-posta Adresi</label>
+                            </div>
+
+                            <div class="form-floating mb-3 position-relative">
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                                <label for="loginPassword">Şifre</label>
+                                <i class="bi bi-eye text-white-50 position-absolute end-0 top-50 translate-middle-y me-3" style="cursor: pointer;"></i>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input bg-transparent border-secondary" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label text-secondary small" for="rememberMe">
+                                        Beni Hatırla
+                                    </label>
+                                </div>
+                                <a hre="#" class="text-secondary small text-decoration-underline">Şifremi Unuttum?</a>
+
+                            </div>
+
+                            <button type="submit" class="btn btn-primary-glow w-100 mb-4">
+                                Sahneye Çık
+                            </button>
+
+                        </form>
+                    </div>
+
+
+                    <!-- REGISTER -->
+                    <div id="register-form" class="form-section d-none">
+                        <div class="text-center mb-4">
+                            <h2 class="text-white mb-2">Aramıza Katıl</h2>
+                            <p class="text-secondary small">Kendi hikayeni yazmaya başla.</p>
+                        </div>
+
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row g-2 mb-3">
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="regName" name="r_first_name" placeholder="Ad">
+                                        <label for="regName">Ad</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="regSurname" name="r_last_name" placeholder="Soyad">
+                                        <label for="regSurname">Soyad</label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="regEmail" name="r_email" placeholder="name@example.com">
+                                <label for="regEmail">E-posta</label>
+                            </div>
+                        
+                            <div class="row g-2 mb-3">
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="regPassword" name="r_password" placeholder="Password">
+                                        <label for="regPassword">Şifre</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="regRePassword" name="r_repassword" placeholder="Password">
+                                        <label for="regRePassword">Tekrar Şifre</label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="regPhoneNumber" name="r_phone" placeholder="5551234567">
+                                <label for="regPhoneNumber">Telefon Numarası</label>
+                            </div>
+                        
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="regDepartment" name="r_department" aria-label="Bölüm Seçimi">
+                                    <option selected disabled value="">Seçiniz</option>
+                                    <option value="1">Mühendislik Fakültesi - Bilgisayar Mühendisliği</option>
+                                </select>
+                                <label for="regDepartment">Okul Bölümünüz</label>
+                            </div>
+                        
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="regSchoolNumber" name="r_tc" placeholder="11111111111">
+                                <label for="regSchoolNumber">Okul Numarası</label>
+                            </div>
+                        
+                            <div class="row g-2 mb-3">
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="regTheatreShip" name="r_theatreship" aria-label="Bölüm Seçimi">
+                                            <option selected disabled value="">Seçiniz</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                        <label for="regTheatreShip">Tiyatro İlgisi</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="regCinemaShip" name="r_cinemaship" aria-label="Bölüm Seçimi">
+                                            <option selected disabled value="">Seçiniz</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                        <label for="regCinemaShip">Sinema İlgisi</label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="mb-4">
+                                <label class="form-label text-white-50 small ms-1">Ödeme Dekontu</label>
+                                <div class="upload-zone" id="dekontZone">
+                                    <input type="file" name="receipt" id="dekontInput" name="r_receipt" class="file-input-hidden" accept=".pdf, .jpg, .jpeg, .png">
+                                    <div id="uploadPlaceholder">
+                                        <i class="bi bi-cloud-arrow-up upload-icon"></i>
+                                        <h6 class="upload-text fw-medium mb-0">Dosyayı buraya sürükleyin</h6>
+                                        <span class="upload-hint">veya seçmek için tıklayın (PDF, JPG, PNG)</span>
+                                    </div>
+                                    <div id="fileInfo" class="d-none align-items-center justify-content-center flex-column">
+                                        <i class="bi bi-check-circle-fill text-success fs-2 mb-2"></i>
+                                        <span class="text-white fw-bold small" id="fileNameDisplay">dosya_adi.pdf</span>
+                                        <span class="text-success small mt-1">Yüklemeye Hazır</span>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="form-check mb-4">
+                                <input class="form-check-input bg-transparent border-secondary" type="checkbox" id="terms">
+                                <label class="form-check-label text-secondary small" for="terms">
+                                    <a href="#" class="text-secondary text-decoration-underline">Kulüp Tüzüğü</a>'nü okudum ve kabul ediyorum.
+                                </label>
+                            </div>
+
+                            {% csrf_token %}
+                        
+                            <button type="submit" class="btn btn-primary-glow w-100" style="background: linear-gradient(135deg, var(--secondary-600), #8f622d);">
+                                Kaydı Tamamla
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/pages/login.js' %}"></script>
+</body>
+</html>
