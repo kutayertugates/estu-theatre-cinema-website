@@ -14,7 +14,7 @@ class Department(models.Model):
         verbose_name_plural = 'Bölümler'
 
     def __str__(self):
-        return f'{self.faculty} {self.department}'
+        return f'{self.faculty} > {self.department}'
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     period = models.ForeignKey(Period, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Dönem')

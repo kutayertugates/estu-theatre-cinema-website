@@ -46,18 +46,46 @@
                             <p class="text-secondary small">Başrol seni bekliyor, sahneye çıkmaya hazır mısın?</p>
                         </div>
 
-                        <form>
+                        <form method="POST">
+                            <div class="row">
+                                <div class="col-12">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            
+                                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    {% if user.is_authenticated %}
+                                        <p>Hoş geldin, {{ user.first_name }}!</p>
+                                        <a href="#">Çıkış Yap</a>
+                                    {% else %}
+                                        <a href="{% url 'Account:login' %}">Giriş Yap</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+                                <input type="email" class="form-control" id="loginEmail" name="l_email" placeholder="name@example.com" required>
                                 <label for="loginEmail">E-posta Adresi</label>
                             </div>
 
                             <div class="form-floating mb-3 position-relative">
-                                <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                                <input type="password" class="form-control" id="loginPassword" name="l_password" placeholder="Password" required>
                                 <label for="loginPassword">Şifre</label>
-                                <i class="bi bi-eye text-white-50 position-absolute end-0 top-50 translate-middle-y me-3" style="cursor: pointer;"></i>
+                                <i class="bi bi-eye text-white-50 position-absolute end-0 top-50 translate-middle-y me-3" 
+                                   id="togglePassword" 
+                                   style="cursor: pointer; z-index: 5;"></i>
                             </div>
-
+                            <!--
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="form-check">
                                     <input class="form-check-input bg-transparent border-secondary" type="checkbox" id="rememberMe">
@@ -66,10 +94,11 @@
                                     </label>
                                 </div>
                                 <a hre="#" class="text-secondary small text-decoration-underline">Şifremi Unuttum?</a>
-
                             </div>
+                            -->
+                            {% csrf_token %}
 
-                            <button type="submit" class="btn btn-primary-glow w-100 mb-4">
+                            <button type="submit" class="btn btn-primary-glow w-100 mb-4" name="login_btn">
                                 Sahneye Çık
                             </button>
 
@@ -84,87 +113,75 @@
                             <p class="text-secondary small">Kendi hikayeni yazmaya başla.</p>
                         </div>
 
+
                         <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            
+                                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
                             <div class="row g-2 mb-3">
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="regName" name="r_first_name" placeholder="Ad">
+                                        <input type="text" class="form-control" id="regName" name="r_first_name" placeholder="Ad" maxlength="50" required>
                                         <label for="regName">Ad</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="regSurname" name="r_last_name" placeholder="Soyad">
+                                        <input type="text" class="form-control" id="regSurname" name="r_last_name" placeholder="Soyad" maxlength="50" required>
                                         <label for="regSurname">Soyad</label>
                                     </div>
                                 </div>
                             </div>
                         
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="regEmail" name="r_email" placeholder="name@example.com">
+                                <input type="email" class="form-control" id="regEmail" name="r_email" placeholder="name@example.com" maxlength="254" required>
                                 <label for="regEmail">E-posta</label>
                             </div>
                         
                             <div class="row g-2 mb-3">
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="regPassword" name="r_password" placeholder="Password">
+                                        <input type="password" class="form-control" id="regPassword" name="r_password" placeholder="Password" required>
                                         <label for="regPassword">Şifre</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="regRePassword" name="r_repassword" placeholder="Password">
+                                        <input type="password" class="form-control" id="regRePassword" name="r_repassword" placeholder="Password" required>
                                         <label for="regRePassword">Tekrar Şifre</label>
                                     </div>
                                 </div>
                             </div>
                         
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="regPhoneNumber" name="r_phone" placeholder="5551234567">
+                                <input type="text" class="form-control" id="regPhoneNumber" name="r_phone" placeholder="5551234567" maxlength="24" required>
                                 <label for="regPhoneNumber">Telefon Numarası</label>
                             </div>
                         
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="regDepartment" name="r_department" aria-label="Bölüm Seçimi">
-                                    <option selected disabled value="">Seçiniz</option>
-                                    <option value="1">Mühendislik Fakültesi - Bilgisayar Mühendisliği</option>
+                                <select class="form-select" id="regDepartment" name="r_department" aria-label="Bölüm Seçimi" required>
+                                    <option selected disabled>Seçiniz</option>
+                                    {% for department in departments %}
+                                    <option value="{{ department.id }}">{{ department }}</option>
+                                    {% endfor %}
                                 </select>
                                 <label for="regDepartment">Okul Bölümünüz</label>
                             </div>
                         
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="regSchoolNumber" name="r_tc" placeholder="11111111111">
+                                <input type="text" class="form-control" id="regSchoolNumber" name="r_tc" placeholder="11111111111" maxlength="11" required>
                                 <label for="regSchoolNumber">Okul Numarası</label>
-                            </div>
-                        
-                            <div class="row g-2 mb-3">
-                                <div class="col">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="regTheatreShip" name="r_theatreship" aria-label="Bölüm Seçimi">
-                                            <option selected disabled value="">Seçiniz</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                        <label for="regTheatreShip">Tiyatro İlgisi</label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="regCinemaShip" name="r_cinemaship" aria-label="Bölüm Seçimi">
-                                            <option selected disabled value="">Seçiniz</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                        <label for="regCinemaShip">Sinema İlgisi</label>
-                                    </div>
-                                </div>
                             </div>
                         
                             <div class="mb-4">
@@ -185,7 +202,7 @@
                             </div>
                         
                             <div class="form-check mb-4">
-                                <input class="form-check-input bg-transparent border-secondary" type="checkbox" id="terms">
+                                <input class="form-check-input bg-transparent border-secondary" type="checkbox" name="r_terms" id="terms" required>
                                 <label class="form-check-label text-secondary small" for="terms">
                                     <a href="#" class="text-secondary text-decoration-underline">Kulüp Tüzüğü</a>'nü okudum ve kabul ediyorum.
                                 </label>
@@ -193,7 +210,7 @@
 
                             {% csrf_token %}
                         
-                            <button type="submit" class="btn btn-primary-glow w-100" style="background: linear-gradient(135deg, var(--secondary-600), #8f622d);">
+                            <button type="submit" class="btn btn-primary-glow w-100" name="register_btn" style="background: linear-gradient(135deg, var(--secondary-600), #8f622d);">
                                 Kaydı Tamamla
                             </button>
                         </form>

@@ -34,25 +34,64 @@ function switchTab(tab) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {         
-    const toggleIcon = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('loginPassword');
 
-    // Elementler sayfada varsa kod çalışsın (Hata almamak için)
-    if (toggleIcon && passwordInput) {
-        
-        toggleIcon.addEventListener('click', function () {
-            
-            // 1. Tıklama anındaki güncel tipi al (her seferinde kontrol et)
-            const currentType = passwordInput.getAttribute('type');
-            
-            // 2. Eğer şifre ise metin yap, metin ise şifre yap
-            const newType = currentType === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', newType);
-            
-            // 3. İkonu değiştir (Göz açık/kapalı değişimi)
-            this.classList.toggle('bi-eye');      // Açık gözü ekle/çıkar
-            this.classList.toggle('bi-eye-slash'); // Çizgili gözü ekle/çıkar
-        });
+const togglePassword = document.querySelector('#togglePassword');
+const passwordInput = document.querySelector('#loginPassword');
+
+togglePassword.addEventListener('click', function (e) {
+    // 1. Mevcut tipi al (password mü, text mi?)
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    
+    // 2. Tipi değiştir
+    passwordInput.setAttribute('type', type);
+
+    // 3. İkonu değiştir (Göz açık <-> Göz kapalı)
+    // Bootstrap icon sınıfını değiştiriyoruz
+    this.classList.toggle('bi-eye');
+    this.classList.toggle('bi-eye-slash');
+});
+
+
+const phoneInput = document.getElementById('regPhoneNumber');
+phoneInput.addEventListener('input', function (e) {
+    // 1. Girilen değerden rakam olmayan her şeyi sil
+    // (Kullanıcı harf veya sembol giremesin, sadece temiz data kalsın)
+    let value = this.value.replace(/\D/g, '');
+
+    // 2. Eğer kullanıcı yanlışlıkla başına 90 yazarsa onu temizle
+    // (Zaten biz +90 ekleyeceğiz)
+    if (value.startsWith('90')) {
+        value = value.substring(2);
+    }
+
+    // 3. Maksimum 10 haneye izin ver (5xx xxx xx xx)
+    value = value.substring(0, 10);
+
+    // 4. Formatı adım adım oluştur
+    let formattedValue = '';
+
+    if (value.length > 0) {
+        formattedValue = '+90 (' + value.substring(0, 3);
+    }
+    if (value.length >= 4) {
+        formattedValue += ') ' + value.substring(3, 6);
+    }
+    if (value.length >= 7) {
+        formattedValue += ' ' + value.substring(6, 8);
+    }
+    if (value.length >= 9) {
+        formattedValue += ' ' + value.substring(8, 10);
+    }
+
+    // 5. Input değerini güncelle
+    this.value = formattedValue;
+});
+
+// Ufak bir UX iyileştirmesi:
+// Kullanıcı silme tuşuna basıp her şeyi silerse +90 da gitsin diye kontrol
+phoneInput.addEventListener('keydown', function(e) {
+    const key = e.key;
+    if (key === 'Backspace' && this.value.length <= 6) {
+            this.value = '';
     }
 });
