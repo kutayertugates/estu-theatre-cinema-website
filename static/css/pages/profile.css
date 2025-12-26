@@ -144,3 +144,15 @@
     background: rgba(0, 0, 0, 0.4) !important;
 }
 .form-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; color: var(--text-500); }
+
+.hover-warning {
+    transition: all 0.3s ease;
+    border-color: rgba(255,255,255,0.2);
+}
+
+.hover-warning:hover {
+    background-color: #dea552; /* Senin Secondary rengin (Sinema Sarısı) */
+    color: #000; /* Siyah yazı ile yüksek kontrast */
+    border-color: #dea552;
+    box-shadow: 0 0 15px rgba(222, 165, 82, 0.4);
+}

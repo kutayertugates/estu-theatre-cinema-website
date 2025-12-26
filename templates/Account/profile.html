@@ -7,6 +7,30 @@
 
 {% block PageCSS %}
 <link rel="stylesheet" href="{% static 'css/pages/profile.css' %}">
+<style>
+    /* Şifre butonu için özel hover efekti */
+    .hover-warning { transition: all 0.3s ease; border-color: rgba(255,255,255,0.2); }
+    .hover-warning:hover {
+        background-color: #dea552; color: #000; border-color: #dea552;
+        box-shadow: 0 0 15px rgba(222, 165, 82, 0.4);
+    }
+
+    /* YENİ: Logout Link Özelleştirmesi (Minimalist & Performans Dostu) */
+    .logout-link {
+        color: rgba(255, 255, 255, 0.5) !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        transition: all 0.3s ease;
+        padding: 10px 20px !important;
+    }
+    
+    .logout-link:hover {
+        color: #ff6b6b !important; /* Pastel Kırmızı */
+        background: rgba(220, 53, 69, 0.1) !important;
+        border-color: rgba(220, 53, 69, 0.2) !important;
+        transform: translateX(5px); /* UX: Sağa doğru hafif 'çıkış' hissi */
+    }
+</style>
 {% endblock %}
 
 {% block Title %}Dashboard | {{ user.first_name }} | {% endblock %}
@@ -17,7 +41,7 @@
         
         <div class="mb-4">
              <span class="user-meta-badge text-secondary">
-                <i class="bi bi-qr-code me-2"></i> ID: {{ user.id|stringformat:"04d" }}-MBR
+                <i class="bi bi-qr-code me-2"></i> ID: {{ user.id|stringformat:"05d" }}-MBR
             </span>
         </div>
 
@@ -36,7 +60,6 @@
     <div class="container">
         
         <div class="row g-4 cue-card-container" data-aos="fade-up" data-aos-delay="150">
-            
             <div class="col-md-4">
                 <div class="cue-card">
                     <i class="bi bi-ticket-perforated-fill card-icon-huge text-white"></i>
@@ -82,11 +105,12 @@
                 </div>
             </div>
         </div>
+        
         <div class="row content-area" data-aos="fade-up" data-aos-delay="300">
             <div class="col-12">
                 <div class="glass-panel p-4 p-md-5 rounded-4">
                     
-                    <ul class="nav nav-pills nav-pills-custom mb-5 justify-content-center justify-content-md-start" role="tablist">
+                    <ul class="nav nav-pills nav-pills-custom mb-5 align-items-center" role="tablist">
                          <li class="nav-item">
                             <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#settings">
                                 <i class="bi bi-sliders me-2"></i>Hesap Ayarları
@@ -97,33 +121,62 @@
                                 <i class="bi bi-clock-history me-2"></i>Bilet Geçmişi
                             </button>
                         </li>
+
+                        <li class="nav-item ms-md-auto mt-3 mt-md-0">
+                            <a href="{% url 'Account:Logout' %}" class="nav-link logout-link d-flex align-items-center gap-2 rounded-pill">
+                                <span class="small fw-bold text-uppercase" style="letter-spacing: 1px;">Güvenli Çıkış</span>
+                                <i class="bi bi-box-arrow-right fs-5"></i>
+                            </a>
+                        </li>
                     </ul>
 
                     <div class="tab-content">
                         
                         <div class="tab-pane fade show active" id="settings">
-                             <form method="POST">
+    
+                            <h4 class="text-white font-playfair mb-4">Kişisel Bilgiler</h4>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <form method="POST" id="personalInfoForm">
                                 {% csrf_token %}
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label">Adınız</label>
-                                        <input type="text" class="form-control form-glass" value="{{ user.first_name }}">
+                                        <input type="text" name="u_first_name" class="form-control form-glass" value="{{ user.first_name }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Soyadınız</label>
-                                        <input type="text" class="form-control form-glass" value="{{ user.last_name }}">
+                                        <input type="text" name="u_last_name" class="form-control form-glass" value="{{ user.last_name }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Telefon</label>
-                                        <input type="tel" class="form-control form-glass" placeholder="05XX XXX XX XX">
+                                        <input type="tel" name="u_phone" class="form-control form-glass" id="profilePhone" value="{{ user.phone }}" placeholder="+90 (5XX) XXX XX XX" maxlength="24">
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Bölüm / Fakülte</label>
-                                        <input type="text" class="form-control form-glass" placeholder="Bölümünüzü giriniz">
+                                        <label class="form-label" for="regDepartment">Okul Bölümünüz</label>
+                                        <select class="form-select form-glass" id="regDepartment" name="u_department" aria-label="Bölüm Seçimi" required>
+                                            <option selected disabled>Seçiniz</option>
+                                            {% for department in departments %}
+                                                <option value="{{ department.id }}" {% if user.department_id == department.id %}selected{% endif %}>{{ department }}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
-                                      <div class="col-12 pt-3">
-                                        <div class="p-3 rounded-3 border border-warning border-opacity-25 d-flex align-items-center" style="background: rgba(222, 165, 82, 0.05);">
-                                            <i class="bi bi-envelope-exclamation fs-4 text-warning me-3"></i>
+                                    
+                                    <div class="col-12 pt-3">
+                                        <div class="p-3 rounded-3 border border-secondary border-opacity-25 d-flex align-items-center" style="background: rgba(255, 255, 255, 0.02);">
+                                            <i class="bi bi-info-circle fs-4 text-secondary me-3"></i>
                                             <div>
                                                 <small class="d-block text-white fw-bold">E-posta: {{ user.email }}</small>
                                                 <small class="text-muted" style="font-size: 0.75rem;">E-posta adresi değişikliği için lütfen yönetim kurulu ile iletişime geçiniz.</small>
@@ -131,10 +184,43 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-5 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-link text-muted text-decoration-none me-3">İptal</button>
-                                    <button type="submit" class="btn btn-danger px-5 py-3 rounded-pill fw-bold d-flex align-items-center" style="background: var(--primary-600); border:none; box-shadow: 0 10px 20px -10px rgba(158, 42, 47, 0.5);">
-                                        <i class="bi bi-save2-fill me-2"></i> Değişiklikleri Kaydet
+                                
+                                <div class="mt-4 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-bold d-flex align-items-center" name="update_btn" style="background: var(--primary-600); border:none; box-shadow: 0 4px 15px rgba(158, 42, 47, 0.3);">
+                                        <i class="bi bi-person-check-fill me-2"></i> Bilgileri Güncelle
+                                    </button>
+                                </div>
+                            </form>
+                        
+                            <hr class="my-5 border-secondary opacity-25">
+                        
+                            <h4 class="text-white font-playfair mb-4">
+                                <i class="bi bi-shield-lock me-2 text-warning"></i>Güvenlik & Şifre
+                            </h4>
+                        
+                            <form method="POST" id="passwordChangeForm">
+                                {% csrf_token %}
+                                <div class="row g-4">
+                                    <div class="col-12">
+                                        <label class="form-label">Mevcut Şifre</label>
+                                        <input type="password" name="old_password" class="form-control form-glass" placeholder="••••••••">
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label class="form-label">Yeni Şifre</label>
+                                        <input type="password" name="new_password" class="form-control form-glass" placeholder="Yeni şifreniz">
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label class="form-label">Yeni Şifre (Tekrar)</label>
+                                        <input type="password" name="confirm_password" class="form-control form-glass" placeholder="Şifreyi onaylayın">
+                                    </div>
+                                </div>
+                        
+                                <div class="mt-4 d-flex justify-content-end align-items-center">
+                                    <small class="text-muted me-3 fst-italic" style="font-size: 0.75rem;">Oturumunuz kapatılabilir.</small>
+                                    <button type="submit" name="update_password_btn" class="btn btn-outline-light px-4 py-2 rounded-pill fw-bold d-flex align-items-center hover-warning">
+                                        <i class="bi bi-key-fill me-2"></i> Şifreyi Değiştir
                                     </button>
                                 </div>
                             </form>
@@ -188,4 +274,6 @@
 </section>
 {% endblock %}
 
-{% block PageJS %}{% endblock %}
+{% block PageJS %}
+<script src="{% static 'js/pages/profile.js' %}"></script>
+{% endblock %}
