@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import CustomUser, Department
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -15,7 +15,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         ('Dönem', {'fields': ('period',)}),
         ('Temel', {'fields': ('email', 'password')}),
-        ('Kişisel Bilgiler', {'fields': ('first_name', 'last_name')}),
+        ('Kişisel Bilgiler', {'fields': ('first_name', 'last_name', 'tc_no', 'phone', 'department')}),
         ('Dosyalar', {'fields': ('receipt',)}),
         ('Yetkiler', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Önemli Tarihler', {'fields': ('last_login', 'date_joined')}),
@@ -23,8 +23,28 @@ class CustomUserAdmin(UserAdmin):
 
     add_fieldsets = (
         (None, {
-            'fields': ('email', 'password', 'confirm_password'),
+            'fields': ('period', 'email', 'password1', 'password2'),
         }),
     )
 
     filter_horizontal = ('groups', 'user_permissions',)
+
+@admin.register(Department)
+class DepartmentModel(admin.ModelAdmin):
+    list_display = ('faculty', 'department',)
+
+    list_filter = ('faculty',)
+    
+    search_fields = ('faculty', 'department',)
+
+    fieldsets = (
+        (None, {
+            'fields': ('faculty', 'department')
+        }),
+    )
+
+    add_fieldsets = (
+        (None, {
+            'fields': ('faculty', 'department'),
+        }),
+    )
